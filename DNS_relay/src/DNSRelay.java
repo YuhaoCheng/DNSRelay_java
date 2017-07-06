@@ -47,7 +47,7 @@ public class DNSRelay {
 		inPacket = new DatagramPacket(buf, buf.length);
 		socket = new DatagramSocket(LOCAL_PORT);
 		Tool tool = new Tool();
-		
+		IPTable = tool.loadIPTable();
 		while(true){
 			socket.receive(inPacket);
 			byte[] data = inPacket.getData();
@@ -56,20 +56,26 @@ public class DNSRelay {
 			idByte[1] = data[1];
 			
 			//String domainName = tool.getDomainName(data);
-			IPTable = tool.loadIPTable();
+
 			IDSession item = new IDSession(inPacket);
 			String id = tool.convertByteToString(idByte);
-			IDTable.put(id, item);
-			
+			System.out.println(id);
+			try{
+			IDTable.put(id,item);
+			}
+			catch(Exception e){
+				
+			}
 			
 			if((data[2] & 0x80)==0x00){ // juge whether it is query
 				QueryProcess qp = new QueryProcess(data,socket,inPacket,IPTable);
 				new Thread(qp).start();
 			}
 			else{
-				ReceiveProcess rp = new ReceiveProcess(inPacket,IDTable);
+				ReceiveProcess rp = new ReceiveProcess(inPacket,socket,IDTable);
 				new Thread(rp).start();
 			}
+			//socket.close();
 			//System.out.println(domainName);
 		}
 		

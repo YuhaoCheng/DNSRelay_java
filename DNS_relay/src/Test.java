@@ -15,7 +15,7 @@ public class Test {
 		//byte t = 0x10;
 		//char c = (char) t;
 		//System.out.println(t);
-		Tool tool = new Tool();
+		//Tool tool = new Tool();
 		//tool.loadIPTable();
 	    //byte[] a = tool.convertIPToByte4("10.97.10.11");
 	    
@@ -33,7 +33,10 @@ public class Test {
 		byte[] bytes = new byte[2];
 		bytes[0] = (byte)80;
 		bytes[1] = (byte)2;
-	    String temp = tool.convertByteToString(bytes);
+		byte[] m = new byte[2];
+		m[0] = bytes[0];
+		m[1] = bytes[1];
+	    String temp = tool.convertByteToString(m);
 	    System.out.println(temp);**/
 	    //System.out.println((byte)1);
 		
