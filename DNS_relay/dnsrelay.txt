@@ -1,0 +1,7 @@
+0.0.0.0 www.666.com
+114.255.40.66 www.bupt.com.cn
+114.255.40.64 www.baidu.com
+22.34.56.78 www.123.com
+56.12.12.12 www.zhihu.com
+
+ 
