@@ -16,6 +16,7 @@ public class QueryProcess{
 	private DatagramSocket socket;
 	private DatagramPacket packet; // the coming packet
 	private DatagramPacket outPacket; // the sending packet
+	//private static final boolean IPv6_FLAG;
 	
 	private InetAddress resolverAddress;
 	private int resolverPort;
@@ -32,8 +33,19 @@ public class QueryProcess{
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Tool tool = new Tool();
 		
-		//Query q = new Query(packet); // Test the Query class
+		Query q = new Query(packet); // Test the Query class
 		
+		if(q.queryType == 28){
+			System.out.println("IPv6 Packet");
+			byte[] sendData = packet.getData();
+			outPacket = new DatagramPacket(sendData,sendData.length, InetAddress.getByName(DNS_IP), DNS_PORT);
+			socket.send(outPacket); 
+			Date d = new Date();
+			System.out.println("Forward Time: " + df.format(new Date()));
+			System.out.println("Function£º" + "IPv6 packet forwards to the remote DNS server");
+			
+		}
+		else{
 		domainName = tool.getDomainName(data);
 		String ip = ""; 
 		resolverAddress = packet.getAddress();
@@ -78,6 +90,7 @@ public class QueryProcess{
 			System.out.println("Function£º" + "Forward to the remote DNS server");
 			
 		}
+	}	
 	}
 	/**
 	public void run(){
